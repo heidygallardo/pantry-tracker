@@ -5,6 +5,8 @@ import { Button, Box, Modal, TextField, Typography, Stack, ThemeProvider, create
 import { collection, getDocs, query, doc, getDoc, setDoc, deleteDoc } from "firebase/firestore";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { Analytics } from "@vercel/analytics/react"
+
 
 const theme = createTheme({
   palette: {
@@ -245,6 +247,7 @@ export default function Home() {
 
 
       </Box>
+      <Analytics />
     </ThemeProvider>
   );
 }
