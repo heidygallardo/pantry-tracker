@@ -10,20 +10,29 @@ const theme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#0A9809",
+      main: "#FF3298",
     },
     secondary: {
-      main: "#D40404",
+      main: "#b2276c"
+      //main: "#FFC0CB",
+    },
+    success: {
+      main: "#91FB91"
     },
     typography: {
-      h2: {
+      /*h2: {
         fontWeight: 'bold',
-      },
+        fontFamily: 'Raleway,Arial, sans-serif',
+
+      },*/
+      //fontFamily: 'Raleway,Arial, sans-serif',
+
     },
     background: {
-      //default: "#F8F9FA",
-      default: "#2f3940",
-      paper: "#FFF",
+
+      //default: "#2f3940",
+      default: "#fbfbeb",
+      paper: "#fbfbeb",
     }
   }
 })
@@ -94,6 +103,7 @@ export default function Home() {
   }
 
   return (
+
     <ThemeProvider theme={theme}>
       <Box
         width="100%"
@@ -103,15 +113,20 @@ export default function Home() {
         justifyContent="flex-start"
         alignItems="center"
         gap={2}
-        bgcolor="#2f3940"
+        //bgcolor="#2f3940"
+        sx={{
+          backgroundImage: 'url(/img/pink-pantry.png)',
+
+        }}
 
       >
 
-        <Box width="100%" display="flex" alignItems="center" padding={2} bgcolor="#F8F9FA">
-          <img src="/img/pantrytracker.png" alt="logo" style={{ height: 50, marginRight: 16 }}></img>
+        <Box width="100%" display="flex" alignItems="center" padding={2} bgcolor="#fbfbeb">
+          <img src="/img/pink-pantry.png" alt="logo" style={{ height: 50, marginRight: 16 }}></img>
           <Typography variant="h5">
             Pantry Tracker
           </Typography>
+
 
           <TextField
             label="Search your pantry"
@@ -123,6 +138,7 @@ export default function Home() {
           />
 
 
+
         </Box>
 
 
@@ -130,7 +146,7 @@ export default function Home() {
           <Box
             position="absolute" top="50%" left="50%"
             width={400}
-            bgcolor="white"
+            bgcolor="#fbfbeb"
             border="2px solid #000"
             boxShadow={24}
             p={4}
@@ -149,7 +165,8 @@ export default function Home() {
                 onChange={(e) => setItemName(e.target.value)}
               />
               <Button
-                variant="outlined"
+                variant="contained"
+                color="primary" sx={{ fontWeight: 'bold' }}
                 onClick={() => {
                   addItem(itemName);
                   setItemName('');
@@ -164,37 +181,56 @@ export default function Home() {
 
 
 
-        <Typography variant="h3" color="#fff" sx={{ mt: 4, mb: 4 }}>
-          Inventory Items
-        </Typography>
-        <Card variant="outlined" sx={{ width: '100%', maxWidth: '800px' }}>
+
+        <Card variant="outlined" sx={{ width: '100%', maxWidth: '800px', mt: 5, mb:2}}>
           <CardContent>
 
-            <Stack direction="row" justifyContent="space-between" >
+
+            <Stack direction="row" justifyContent="space-between" alignItems="center">
+              <Typography variant="h4">Inventory Items</Typography>
+              <Button
+                variant="contained"
+                onClick={handleOpen}
+                sx={{
+                  minHeight: "50px",
+
+                  fontWeight: "bold",
+
+                }}
+              >
+                Add New Item
+              </Button>
+            </Stack>
+
+
+
+          </CardContent>
+        </Card>
+
+        <Card variant="outlined" sx={{ width: '100%', maxWidth: '800px', mb:-1.1}}>
+        <CardContent>
+        <Stack direction="row" justifyContent="space-between"  >
               <Typography variant="h6" fontWeight="bold">Item</Typography>
               <Typography variant="h6" fontWeight="bold">Quantity</Typography>
               <Typography variant="h6" fontWeight="bold">Actions</Typography>
-
             </Stack>
-          </CardContent>
+        </CardContent>
         </Card>
+
         <Card variant="outlined" sx={{ width: '100%', maxWidth: '800px', height: '400px', overflow: 'auto' }}>
           <CardContent>
 
-
-
-
-
-            <Stack spacing={2} mt={3}>
+            <Stack spacing={2} mt={2}>
               {searchResults.map(({ name, quantity }) => (
+                
                 <Box key={name}>
                   <Stack direction="row" justifyContent="space-between" alignItems="center">
                     <Typography variant="h6" sx={{ width: '25%' }}>{name.charAt(0).toUpperCase() + name.slice(1)}</Typography>
-                    <Typography variant="h6">{quantity}</Typography>
+                    <Typography variant="h6" >{quantity}</Typography>
                     <Stack direction="row" spacing={3}>
-                      <Button variant="contained" startIcon={<RemoveIcon />} color="secondary" onClick={() => removeItem(name)}>Remove</Button>
+                      <Button variant="contained" startIcon={<RemoveIcon />} color="secondary" sx={{ fontWeight: 'bold' }} onClick={() => removeItem(name)}>Remove</Button>
 
-                      <Button variant="contained" startIcon={<AddIcon />} color="primary" onClick={() => addItem(name)}>Add</Button>
+                      <Button variant="contained" startIcon={<AddIcon />} color="primary" sx={{ fontWeight: 'bold' }} onClick={() => addItem(name)}>Add</Button>
                     </Stack>
                   </Stack>
                   <Divider sx={{ my: 3 }} />
@@ -206,16 +242,8 @@ export default function Home() {
           </CardContent>
         </Card>
 
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleOpen}
-          sx={{
-            minHeight: "50px", mt: 2, mb: 4
-          }}
-        >
-          Add New Item
-        </Button>
+
+
       </Box>
     </ThemeProvider>
   );
